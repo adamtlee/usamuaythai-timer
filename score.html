@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer UI</title>
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        Red Corner - John Doe
+                    </div>
+                    <div class="card-body">
+                        <!-- Timer -->
+                        <div class="text-center">
+                            <h1 id="timer">00:00</h1>
+                        </div>
+                        <!-- Bout and Round Numbers -->
+                        <div class="text-center mt-4">
+                            <p>Bout Number: <span id="boutNumber">1</span></p>
+                            <p>Round Number: <span id="roundNumber">1</span></p>
+                        </div>
+                        <!-- Buttons -->
+                        <div class="text-center mt-4">
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-primary mr-3" id="startTimer">Start Timer</button>
+                                <button class="btn btn-secondary mr-3" id="stopTimer">Stop Timer</button>
+                                <button class="btn btn-danger" id="endRound">End Round</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-primary text-white">
+                        Blue Corner - Jane Smith
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // JavaScript code for timer functionality goes here
+        let timerInterval;
+        let timerRunning = false;
+        let timerValue = 0;
+        let roundNumber = 1; // Initialize the round number
+
+        const timerElement = document.getElementById("timer");
+        const startButton = document.getElementById("startTimer");
+        const stopButton = document.getElementById("stopTimer");
+        const endRoundButton = document.getElementById("endRound");
+        const roundNumberElement = document.getElementById("roundNumber");
+
+        function startTimer() {
+            if (!timerRunning) {
+                timerInterval = setInterval(updateTimer, 1000);
+                timerRunning = true;
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerRunning = false;
+        }
+
+        function updateTimer() {
+            timerValue++;
+            const minutes = Math.floor(timerValue / 60).toString().padStart(2, "0");
+            const seconds = (timerValue % 60).toString().padStart(2, "0");
+            timerElement.textContent = `${minutes}:${seconds}`;
+        }
+
+        function endRound() {
+            stopTimer();
+            timerValue = 0;
+            timerElement.textContent = "00:00";
+            roundNumber++; // Increment the round number
+            roundNumberElement.textContent = roundNumber; // Update the displayed round number
+            // Add logic for ending the round here...
+        }
+
+        startButton.addEventListener("click", startTimer);
+        stopButton.addEventListener("click", stopTimer);
+        endRoundButton.addEventListener("click", endRound);
+    </script>
+</body>
+
+</html>
